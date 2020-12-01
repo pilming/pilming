@@ -1,0 +1,214 @@
+h1
+{
+  padding: 20px;
+  margin-top: 0px;
+  margin-left: 10%;
+}
+a
+{
+  text-decoration: none;
+  color: black;
+}
+#title
+{
+  font-family: "굴림";
+  font-weight: bold;
+  font-size: 35px;
+  margin-left: 35%;
+}
+.lookup-table
+{
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.table
+{
+  width: 1400px;
+  margin: auto;
+  margin-top: 5%;
+}
+.status
+{
+  width: 800px;
+}
+.table-body tr
+{
+  font-size: medium;
+}
+.status-table tr td
+{
+  width: 200px;
+}
+.indexContents
+{
+  text-align: center;  
+  font-size: 18px;
+  width: 35px;
+}
+.yearContents
+{
+  text-align: center;  
+  font-size: 18px;
+  width: 90px;
+}
+.numberContents
+{
+  text-align: center;  
+  font-size: 18px;
+  width: 250px;
+}
+.processContents
+{
+  text-align: center;  
+  font-size: 18px;
+}
+
+.custom-control_custom-checkbox
+{
+  text-align: center;
+  margin-top: 20px;
+}
+.blIndex
+{
+  font-size: large;
+  border-left: 1px solid silver;
+  text-align: center;
+}
+#open1
+{
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+
+}
+#open2
+{
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+}
+#open3
+{
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+}
+#open4
+{
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+}
+#open5
+{
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+}
+.tdYear
+{
+  border-left: 0.5px dashed silver;
+  width: 45px;
+}
+.bl-number
+{
+  border-left: 0.5px dashed silver;
+}
+.status
+{
+  border-left: 0.5px dashed silver;
+  border-right: 1px solid silver;
+}
+.status_detail
+{
+  border-left: 0.5px dashed silver;
+  border-right: 0.5px solid silver;
+  text-align: center;
+  width: 35px;
+}
+.oneRow
+{
+  border-bottom: 0.5px solid silver;
+}
+.category
+{
+  text-align: center;
+}
+.categoryValue
+{
+
+  text-align: left;
+}
+.Buttons
+{
+  margin-top: 15px;
+  margin-left: 45%;
+  font-size: 30px;
+  padding: 10px 10px;
+  color: white;
+  background-color: rgb(69, 142, 209);
+  ;
+}
+.deleteButton
+{
+  margin-left: 15%;
+}
+.addButton
+{
+  margin-left: 20%;
+}
+.form-control
+{
+  margin-top: 10px;
+  margin-left: 25px;
+}
+.detailContents0
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.detailContents1
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.detailContents2
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.detailContents3
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.detailContents4
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.detailContents5
+{
+  border: 1px solid #aaa0a0;
+  text-align: center;
+}
+.openDetailButton
+{
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: white;
+  border-color: black;
+  border-radius: 15%;
+  border-width: 1px;
+}
+.detailTable
+{
+  margin: auto;
+  width: 800px;
+  margin-bottom: 20px;
+}
+#BL-year
+{
+  margin-left: 13px;
+}
+.blYearInput
+{
+  width: 45px;
+  margin-left: 30px;
+}

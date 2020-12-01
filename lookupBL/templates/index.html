@@ -1,0 +1,1070 @@
+<!--file name : index.html-->
+<!--pwd : /project_name/app/templates/main/index.html-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <!--
+  <script>
+      $(function(){
+          $(id="submit_all").click(function(){
+              $.post("/something",$(".sform").serialize(),function(data){
+
+              });
+          });
+      });
+  </script>
+            
+  -->
+  <script>
+    $(document).on("click","input[name=opentr1]",function()
+      {
+        $('#open1').toggleClass("hide");
+      });
+      $(document).on("click","input[name=opentr2]",function()
+      {
+        $('#open2').toggleClass("hide");
+      });
+      $(document).on("click","input[name=opentr3]",function()
+      {
+        $('#open3').toggleClass("hide");
+      });
+      $(document).on("click","input[name=opentr4]",function()
+      {
+        $('#open4').toggleClass("hide");
+      });
+      $(document).on("click","input[name=opentr5]",function()
+      {
+        $('#open5').toggleClass("hide");
+      });
+  </script>
+  <!--
+<script>
+    $(function()
+    {
+      var yearValue = $('#selectedYear1');
+      $('#BL-year1').ready(function()
+      {
+        var element = $(this).find('option:selected');
+        var myTag = element.attr('value')
+        yearValue.val(myTag);
+      });
+    });
+    $(function()
+    {
+      var yearValue = $('#selectedYear1');
+      $('#BL-year1').change(function()
+      {
+        var element = $(this).find('option:selected');
+        var myTag = element.attr('value')
+        yearValue.val(myTag);
+      });
+    });
+  </script>    
+  -->
+  
+</head>
+
+<body>
+  <form method="POST" action="/search" id = "form1">
+  <h1><a href="/">Lookup B/L</a> </h1>
+  <div id="title">
+    수입화물(House B/L) 일괄 조회
+  </div>
+  <div class="lookup-table">
+    <table class="table">
+      <thead class="table-head">
+        <tr>
+          <th scope="col" class="indexContents">
+
+          </th>
+          <th scope="col" class="yearContents">B/L년도</th>
+          <th scope="col" class="numberContents">BL번호</th>
+          <th scope="col"  class="processContents" colspan="2">진행정보</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="oneRow" name="trOneBL">
+          <td scope="row" class="blIndex">1</td>
+          <td class="tdYear">
+            <div>
+              <input type="text" name ="blInfo" value='{{blYear[0]}}'' class="blYearInput"> <!--하고나서 바뀐값 유지하는것도 문제-->
+            </div>
+            
+          </td>
+          <td class="bl-number">
+            <label class="input-bl">
+              <div class="input-group flex-nowrap">
+                
+                <input type="text" class="form-control" name ="blInfo" placeholder="House B/L번호 입력" value={{blNumber[0]}} >
+              </div>
+            </label>
+          </td>
+          <td class="status">
+              <table class="status-table">
+                <tr>
+                  <td class="category">진행상태</td>
+                  <td class="categoryValue">{{status1[0]}}</td>
+                  <td class="category">품명</td>
+                  <td class="categoryValue">{{status1[1]}}</td>
+                </tr>
+                <tr>
+                  <td class="category">처리일시</td>
+                  <td class="categoryValue">{{status1[2]}}</td>
+                  <td class="category">포장갯수</td>
+                  <td class="categoryValue">{{status1[3]}}</td>
+                </tr>
+                <tr>
+                  <td class="category">통관진행상태</td>
+                  <td class="categoryValue">{{status1[4]}}</td>
+                  <td class="category">총중량</td>
+                  <td class="categoryValue">{{status1[5]}}</td>
+                </tr>
+                <tr>
+                  <td class="category">선박/항공편명</td>
+                  <td class="categoryValue">{{status1[6]}}</td>
+                  <td class="category">입항일</td>
+                  <td class="categoryValue">{{status1[7]}}</td>
+                </tr>
+              </table>
+          </td>
+          <td class="status_detail">
+            <input type="button" name="opentr1" class="openDetailButton" value="▼">
+
+          </td>
+        </tr>
+        <tr id="open1" class="hide">
+          <td></td>
+          <td></td>
+          <td style="text-align: center; font-weight: bold;">
+            최근 15 단계만 표시됩니다.<br>
+            (모든 정보는<br>유니패스에서 확인할 수 있습니다.)
+          </td>
+          <td class="status">
+            <table class="detailTable">
+              <tr>
+                <td class="detailContents0" colspan="2"></td>
+                <th class="detailContents1" colspan="2">처리단계</th>
+                <th class="detailContents2" colspan="2">처리일시</th>
+                <th class="detailContents3" colspan="2">장치장명</th>
+                <th class="detailContents4">포장개수</th>
+                <th class="detailContents5">중량</th>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[0][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[0][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[0][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[0][3]}}</td>
+                <td class="detailContents4">{{status1Detail[0][4]}}</td>
+                <td class="detailContents5">{{status1Detail[0][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[1][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[1][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[1][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[1][3]}}</td>
+                <td class="detailContents4">{{status1Detail[1][4]}}</td>
+                <td class="detailContents5">{{status1Detail[1][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[2][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[2][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[2][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[2][3]}}</td>
+                <td class="detailContents4">{{status1Detail[2][4]}}</td>
+                <td class="detailContents5">{{status1Detail[2][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[3][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[3][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[3][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[3][3]}}</td>
+                <td class="detailContents4">{{status1Detail[3][4]}}</td>
+                <td class="detailContents5">{{status1Detail[3][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[4][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[4][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[4][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[4][3]}}</td>
+                <td class="detailContents4">{{status1Detail[4][4]}}</td>
+                <td class="detailContents5">{{status1Detail[4][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[5][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[5][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[5][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[5][3]}}</td>
+                <td class="detailContents4">{{status1Detail[5][4]}}</td>
+                <td class="detailContents5">{{status1Detail[5][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[6][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[6][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[6][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[6][3]}}</td>
+                <td class="detailContents4">{{status1Detail[6][4]}}</td>
+                <td class="detailContents5">{{status1Detail[6][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[7][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[7][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[7][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[7][3]}}</td>
+                <td class="detailContents4">{{status1Detail[7][4]}}</td>
+                <td class="detailContents5">{{status1Detail[7][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[8][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[8][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[8][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[8][3]}}</td>
+                <td class="detailContents4">{{status1Detail[8][4]}}</td>
+                <td class="detailContents5">{{status1Detail[8][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[9][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[9][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[9][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[9][3]}}</td>
+                <td class="detailContents4">{{status1Detail[9][4]}}</td>
+                <td class="detailContents5">{{status1Detail[9][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[10][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[10][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[10][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[10][3]}}</td>
+                <td class="detailContents4">{{status1Detail[10][4]}}</td>
+                <td class="detailContents5">{{status1Detail[10][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[11][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[11][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[11][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[11][3]}}</td>
+                <td class="detailContents4">{{status1Detail[11][4]}}</td>
+                <td class="detailContents5">{{status1Detail[11][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[12][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[12][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[12][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[12][3]}}</td>
+                <td class="detailContents4">{{status1Detail[12][4]}}</td>
+                <td class="detailContents5">{{status1Detail[12][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[13][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[13][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[13][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[13][3]}}</td>
+                <td class="detailContents4">{{status1Detail[13][4]}}</td>
+                <td class="detailContents5">{{status1Detail[13][5]}}</td>
+              </tr>
+              <tr>
+                <td class="detailContents0" colspan="2">{{status1Detail[14][0]}}</td>
+                <td class="detailContents1" colspan="2">{{status1Detail[14][1]}}</td>
+                <td class="detailContents2" colspan="2">{{status1Detail[14][2]}}</td>
+                <td class="detailContents3" colspan="2">{{status1Detail[14][3]}}</td>
+                <td class="detailContents4">{{status1Detail[14][4]}}</td>
+                <td class="detailContents5">{{status1Detail[14][5]}}</td>
+              </tr>
+            </table>
+          </td>
+
+          <tr class="oneRow" name="trOneBL">
+            <td scope="row" class="blIndex">2</td>
+            <td class="tdYear">
+              <div>
+                <input type="text" name ="blInfo" value="{{blYear[1]}}" class="blYearInput"> <!--하고나서 바뀐값 유지하는것도 문제-->
+              </div>
+            </td>
+            <td class="bl-number">
+              <label class="input-bl">
+                <div class="input-group flex-nowrap">
+                  <input type="text" class="form-control" name ="blInfo" placeholder="House B/L 번호 입력" value={{blNumber[1]}}  >
+                </div>
+              </label>
+            </td>
+            <td class="status">
+                <table class="status-table">
+                  <tr>
+                    <td class="category">진행상태</td>
+                    <td class="categoryValue">{{status2[0]}}</td>
+                    <td class="category">품명</td>
+                    <td class="categoryValue">{{status2[1]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">처리일시</td>
+                    <td class="categoryValue">{{status2[2]}}</td>
+                    <td class="category">포장갯수</td>
+                    <td class="categoryValue">{{status2[3]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">통관진행상태</td>
+                    <td class="categoryValue">{{status2[4]}}</td>
+                    <td class="category">총중량</td>
+                    <td class="categoryValue">{{status2[5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">선박/항공편명</td>
+                    <td class="categoryValue">{{status2[6]}}</td>
+                    <td class="category">입항일</td>
+                    <td class="categoryValue">{{status2[7]}}</td>
+                  </tr>
+                </table>
+            </td>
+            <td class="status_detail">
+              <input type="button" name="opentr2" class="openDetailButton" value="▼">
+  
+            </td>
+          </tr>
+          <tr id="open2" class="hide">
+            <td></td>
+            <td></td>
+            <td style="text-align: center; font-weight: bold;">
+              최근 15 단계만 표시됩니다.<br>
+              (모든 정보는<br>유니패스에서 확인할 수 있습니다.)
+            </td>
+            <td class="status">
+              <table class="detailTable">
+                <tr>
+                  <td class="detailContents0" colspan="2"></td>
+                  <th class="detailContents1" colspan="2">처리단계</th>
+                  <th class="detailContents2" colspan="2">처리일시</th>
+                  <th class="detailContents3" colspan="2">장치장명</th>
+                  <th class="detailContents4">포장개수</th>
+                  <th class="detailContents5">중량</th>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[0][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[0][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[0][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[0][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[0][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[0][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[1][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[1][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[1][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[1][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[1][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[1][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[2][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[2][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[2][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[2][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[2][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[2][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[3][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[3][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[3][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[3][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[3][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[3][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[4][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[4][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[4][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[4][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[4][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[4][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[5][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[5][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[5][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[5][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[5][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[5][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[6][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[6][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[6][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[6][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[6][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[6][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[7][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[7][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[7][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[7][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[7][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[7][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[8][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[8][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[8][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[8][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[8][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[8][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[9][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[9][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[9][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[9][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[9][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[9][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[10][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[10][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[10][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[10][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[10][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[10][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[11][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[11][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[11][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[11][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[11][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[11][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[12][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[12][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[12][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[12][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[12][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[12][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[13][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[13][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[13][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[13][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[13][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[13][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status2Detail[14][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status2Detail[14][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status2Detail[14][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status2Detail[14][3]}}</td>
+                  <td class="detailContents4">{{status2Detail[14][4]}}</td>
+                  <td class="detailContents5">{{status2Detail[14][5]}}</td>
+                </tr>
+              </table>
+            </td>
+  
+          </tr>
+          <tr class="oneRow" name="trOneBL">
+            <td scope="row" class="blIndex">3</td>
+            <td class="tdYear">
+              <div>
+                <input type="text" name ="blInfo" value="{{blYear[2]}}" class="blYearInput"> <!--하고나서 바뀐값 유지하는것도 문제-->
+              </div>
+              
+            </td>
+            <td class="bl-number">
+              <label class="input-bl">
+                <div class="input-group flex-nowrap">
+                  
+                  <input type="text" class="form-control" name ="blInfo" placeholder="House B/L번호 입력" value={{blNumber[2]}} >
+                </div>
+              </label>
+            </td>
+            <td class="status">
+                <table class="status-table">
+                  <tr>
+                    <td class="category">진행상태</td>
+                    <td class="categoryValue">{{status3[0]}}</td>
+                    <td class="category">품명</td>
+                    <td class="categoryValue">{{status3[1]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">처리일시</td>
+                    <td class="categoryValue">{{status3[2]}}</td>
+                    <td class="category">포장갯수</td>
+                    <td class="categoryValue">{{status3[3]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">통관진행상태</td>
+                    <td class="categoryValue">{{status3[4]}}</td>
+                    <td class="category">총중량</td>
+                    <td class="categoryValue">{{status3[5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="category">선박/항공편명</td>
+                    <td class="categoryValue">{{status3[6]}}</td>
+                    <td class="category">입항일</td>
+                    <td class="categoryValue">{{status3[7]}}</td>
+                  </tr>
+                </table>
+            </td>
+            <td class="status_detail">
+              <input type="button" name="opentr3" class="openDetailButton" value="▼">
+  
+            </td>
+          </tr>
+          <tr id="open3" class="hide">
+            <td></td>
+            <td></td>
+            <td style="text-align: center; font-weight: bold;">
+              최근 15 단계만 표시됩니다.<br>
+              (모든 정보는<br>유니패스에서 확인할 수 있습니다.)
+            </td>
+            <td class="status">
+              <table class="detailTable">
+                <tr>
+                  <td class="detailContents0" colspan="2"></td>
+                  <th class="detailContents1" colspan="2">처리단계</th>
+                  <th class="detailContents2" colspan="2">처리일시</th>
+                  <th class="detailContents3" colspan="2">장치장명</th>
+                  <th class="detailContents4">포장개수</th>
+                  <th class="detailContents5">중량</th>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[0][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[0][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[0][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[0][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[0][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[0][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[1][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[1][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[1][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[1][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[1][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[1][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[2][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[2][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[2][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[2][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[2][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[2][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[3][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[3][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[3][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[3][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[3][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[3][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[4][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[4][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[4][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[4][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[4][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[4][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[5][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[5][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[5][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[5][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[5][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[5][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[6][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[6][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[6][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[6][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[6][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[6][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[7][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[7][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[7][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[7][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[7][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[7][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[8][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[8][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[8][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[8][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[8][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[8][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[9][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[9][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[9][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[9][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[9][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[9][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[10][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[10][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[10][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[10][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[10][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[10][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[11][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[11][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[11][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[11][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[11][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[11][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[12][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[12][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[12][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[12][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[12][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[12][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[13][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[13][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[13][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[13][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[13][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[13][5]}}</td>
+                </tr>
+                <tr>
+                  <td class="detailContents0" colspan="2">{{status3Detail[14][0]}}</td>
+                  <td class="detailContents1" colspan="2">{{status3Detail[14][1]}}</td>
+                  <td class="detailContents2" colspan="2">{{status3Detail[14][2]}}</td>
+                  <td class="detailContents3" colspan="2">{{status3Detail[14][3]}}</td>
+                  <td class="detailContents4">{{status3Detail[14][4]}}</td>
+                  <td class="detailContents5">{{status3Detail[14][5]}}</td>
+                </tr>
+              </table>
+            </td>
+            <tr class="oneRow" name="trOneBL">
+              <td scope="row" class="blIndex">4</td>
+              <td class="tdYear">
+                <div>
+                  <input type="text" name ="blInfo" value="{{blYear[3]}}" class="blYearInput"> <!--하고나서 바뀐값 유지하는것도 문제-->
+                </div>
+                
+              </td>
+              <td class="bl-number">
+                <label class="input-bl">
+                  <div class="input-group flex-nowrap">
+                    
+                    <input type="text" class="form-control" name ="blInfo" placeholder="House B/L번호 입력" value={{blNumber[3]}} >
+                  </div>
+                </label>
+              </td>
+              <td class="status">
+                  <table class="status-table">
+                    <tr>
+                      <td class="category">진행상태</td>
+                      <td class="categoryValue">{{status4[0]}}</td>
+                      <td class="category">품명</td>
+                      <td class="categoryValue">{{status4[1]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="category">처리일시</td>
+                      <td class="categoryValue">{{status4[2]}}</td>
+                      <td class="category">포장갯수</td>
+                      <td class="categoryValue">{{status4[3]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="category">통관진행상태</td>
+                      <td class="categoryValue">{{status4[4]}}</td>
+                      <td class="category">총중량</td>
+                      <td class="categoryValue">{{status4[5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="category">선박/항공편명</td>
+                      <td class="categoryValue">{{status4[6]}}</td>
+                      <td class="category">입항일</td>
+                      <td class="categoryValue">{{status4[7]}}</td>
+                    </tr>
+                  </table>
+              </td>
+              <td class="status_detail">
+                <input type="button" name="opentr4" class="openDetailButton" value="▼">
+    
+              </td>
+            </tr>
+            <tr id="open4" class="hide">
+              <td></td>
+              <td></td>
+              <td style="text-align: center; font-weight: bold;">
+                최근 15 단계만 표시됩니다.<br>
+                (모든 정보는<br>유니패스에서 확인할 수 있습니다.)
+              </td>
+              <td class="status">
+                <table class="detailTable">
+                  <tr>
+                    <td class="detailContents0" colspan="2"></td>
+                    <th class="detailContents1" colspan="2">처리단계</th>
+                    <th class="detailContents2" colspan="2">처리일시</th>
+                    <th class="detailContents3" colspan="2">장치장명</th>
+                    <th class="detailContents4">포장개수</th>
+                    <th class="detailContents5">중량</th>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[0][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[0][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[0][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[0][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[0][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[0][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[1][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[1][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[1][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[1][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[1][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[1][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[2][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[2][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[2][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[2][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[2][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[2][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[3][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[3][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[3][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[3][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[3][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[3][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[4][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[4][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[4][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[4][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[4][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[4][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[5][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[5][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[5][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[5][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[5][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[5][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[6][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[6][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[6][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[6][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[6][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[6][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[7][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[7][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[7][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[7][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[7][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[7][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[8][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[8][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[8][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[8][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[8][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[8][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[9][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[9][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[9][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[9][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[9][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[9][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[10][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[10][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[10][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[10][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[10][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[10][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[11][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[11][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[11][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[11][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[11][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[11][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[12][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[12][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[12][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[12][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[12][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[12][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[13][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[13][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[13][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[13][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[13][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[13][5]}}</td>
+                  </tr>
+                  <tr>
+                    <td class="detailContents0" colspan="2">{{status4Detail[14][0]}}</td>
+                    <td class="detailContents1" colspan="2">{{status4Detail[14][1]}}</td>
+                    <td class="detailContents2" colspan="2">{{status4Detail[14][2]}}</td>
+                    <td class="detailContents3" colspan="2">{{status4Detail[14][3]}}</td>
+                    <td class="detailContents4">{{status4Detail[14][4]}}</td>
+                    <td class="detailContents5">{{status4Detail[14][5]}}</td>
+                  </tr>
+                </table>
+              </td>
+              <tr class="oneRow" name="trOneBL">
+                <td scope="row" class="blIndex">5</td>
+                <td class="tdYear">
+                  <div>
+                    <input type="text" name ="blInfo" value="{{blYear[4]}}" class="blYearInput"> <!--하고나서 바뀐값 유지하는것도 문제-->
+                  </div>
+                  
+                </td>
+                <td class="bl-number">
+                  <label class="input-bl">
+                    <div class="input-group flex-nowrap">
+                      
+                      <input type="text" class="form-control" name ="blInfo" placeholder="House B/L번호 입력" value={{blNumber[4]}} >
+                    </div>
+                  </label>
+                </td>
+                <td class="status">
+                    <table class="status-table">
+                      <tr>
+                        <td class="category">진행상태</td>
+                        <td class="categoryValue">{{status5[0]}}</td>
+                        <td class="category">품명</td>
+                        <td class="categoryValue">{{status5[1]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="category">처리일시</td>
+                        <td class="categoryValue">{{status5[2]}}</td>
+                        <td class="category">포장갯수</td>
+                        <td class="categoryValue">{{status5[3]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="category">통관진행상태</td>
+                        <td class="categoryValue">{{status5[4]}}</td>
+                        <td class="category">총중량</td>
+                        <td class="categoryValue">{{status5[5]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="category">선박/항공편명</td>
+                        <td class="categoryValue">{{status5[6]}}</td>
+                        <td class="category">입항일</td>
+                        <td class="categoryValue">{{status5[7]}}</td>
+                      </tr>
+                    </table>
+                </td>
+                <td class="status_detail">
+                  <input type="button" name="opentr5" class="openDetailButton" value="▼">
+      
+                </td>
+              </tr>
+              <tr id="open5" class="hide">
+                <td></td>
+                <td></td>
+                <td style="text-align: center; font-weight: bold;">
+                  최근 15 단계만 표시됩니다.<br>
+                  (모든 정보는<br>유니패스에서 확인할 수 있습니다.)
+                </td>
+                <td class="status">
+                  <table class="detailTable">
+                    <tr>
+                      <td class="detailContents0" colspan="2"></td>
+                      <th class="detailContents1" colspan="2">처리단계</th>
+                      <th class="detailContents2" colspan="2">처리일시</th>
+                      <th class="detailContents3" colspan="2">장치장명</th>
+                      <th class="detailContents4">포장개수</th>
+                      <th class="detailContents5">중량</th>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[0][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[0][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[0][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[0][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[0][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[0][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[1][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[1][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[1][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[1][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[1][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[1][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[2][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[2][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[2][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[2][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[2][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[2][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[3][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[3][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[3][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[3][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[3][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[3][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[4][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[4][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[4][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[4][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[4][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[4][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[5][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[5][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[5][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[5][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[5][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[5][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[6][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[6][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[6][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[6][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[6][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[6][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[7][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[7][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[7][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[7][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[7][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[7][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[8][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[8][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[8][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[8][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[8][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[8][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[9][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[9][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[9][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[9][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[9][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[9][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[10][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[10][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[10][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[10][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[10][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[10][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[11][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[11][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[11][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[11][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[11][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[11][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[12][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[12][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[12][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[12][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[12][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[12][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[13][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[13][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[13][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[13][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[13][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[13][5]}}</td>
+                    </tr>
+                    <tr>
+                      <td class="detailContents0" colspan="2">{{status5Detail[14][0]}}</td>
+                      <td class="detailContents1" colspan="2">{{status5Detail[14][1]}}</td>
+                      <td class="detailContents2" colspan="2">{{status5Detail[14][2]}}</td>
+                      <td class="detailContents3" colspan="2">{{status5Detail[14][3]}}</td>
+                      <td class="detailContents4">{{status5Detail[14][4]}}</td>
+                      <td class="detailContents5">{{status5Detail[14][5]}}</td>
+                    </tr>
+                  </table>
+                </td>
+            
+      </tbody>
+    </table>
+
+      <input type="submit" class='Buttons' value="조회">
+
+  </div>
+
+</form>
+
+</body>
+
+</html>
+<!--
+    <button type="submit" name="searchButton" class="searchButton" form="form2">조회z</button>
+  <html>
+    <head>
+        <button><a href="{{ url_for('search') }}">조회</a></button>
+    </head>
+    <body>
+        <br>
+        This is Main Page Body
+        <br>
+        And This is Accepted Data : 
+        <br>
+        And This is Accepted Data :
+        <br>
+        And This is Accepted Data : 
+        <br>
+
+    </body>
+</html>  
+-->
