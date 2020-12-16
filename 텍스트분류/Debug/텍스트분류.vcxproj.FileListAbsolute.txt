@@ -1,2 +1,0 @@
-C:\Users\wgt3\source\repos\텍스트분류\Debug\텍스트분류.exe
-C:\Users\wgt3\source\repos\텍스트분류\Debug\텍스트분류.pdb

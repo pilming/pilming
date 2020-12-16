@@ -1,5 +1,0 @@
-﻿  document_analyzer.c
-  main.c
-C:\Users\wgt3\source\repos\텍스트분류\main.c(16,9): warning C4013: 'puts'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-  코드를 생성하고 있습니다...
-  텍스트분류.vcxproj -> C:\Users\wgt3\source\repos\텍스트분류\Debug\텍스트분류.exe
